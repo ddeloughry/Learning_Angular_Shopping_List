@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>Angular Stores</title>
+	<script	src="https://ajax.googleapis.com/ajax/libs/angularjs/1.6.9/angular.min.js"></script>
+	<script src="app.js"></script>
+	<script src="controller.js"></script>
+</head>
+<body>
+	<div data-ng-app="MyApp" data-ng-controller="MyController">
+		<h1>Welcome to <span data-ng-bind="shopName"></span>!</h1>
+		<table border="1">
+		<tr>
+			<th><input type="text" data-ng-model="newItem" placeholder="Enter name of item"></input></th>
+			<th>
+				<input type="button" value="-" data-ng-disabled="checkNum()" data-ng-click="changeNumNewItems(-1)"></input>
+				<span data-ng-bind="numNewItems"></span>
+				<input type="button" value="+" data-ng-click="changeNumNewItems(1)"></input>
+			</th>
+			<th><input type="button" data-ng-disabled="validAdd()" data-ng-click="addItem(numNewItems,newItem); newItem.focus()" value="Add"></input></th>
+		</tr>
+		<tr data-ng-repeat="each in myItems">
+			<th><span data-ng-bind="each.item"></span></th>
+			<th>x <span data-ng-bind="each.num"></span></th>
+			<th><input type="button" data-ng-click="removeItem($index)" value="Remove"></input></th>
+		</tr>
+		</table>
+		<p data-ng-bind="errorText"></p>
+	</div>
+</body>
+</html>
