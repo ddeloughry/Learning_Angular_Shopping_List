@@ -13,19 +13,22 @@
 		<tr>
 			<th><input type="text" data-ng-model="newItem" placeholder="Enter name of item"></input></th>
 			<th>
-				<input type="button" value="-" data-ng-disabled="checkNum()" data-ng-click="changeNumNewItems(-1)"></input>
+				<input type="button" value="-" data-ng-disabled="checkNum(-1)" data-ng-click="changeNumNewItems(-1,-1)"></input>
 				<span data-ng-bind="numNewItems"></span>
-				<input type="button" value="+" data-ng-click="changeNumNewItems(1)"></input>
+				<input type="button" value="+" data-ng-click="changeNumNewItems(-1,1)"></input>
 			</th>
-			<th><input type="button" data-ng-disabled="validAdd()" data-ng-click="addItem(numNewItems,newItem); newItem.focus()" value="Add"></input></th>
+			<th><input type="button" data-ng-disabled="validAdd()" data-ng-click="addItem()" value="Add"></input></th>
 		</tr>
 		<tr data-ng-repeat="each in myItems">
-			<th><span data-ng-bind="each.item"></span></th>
-			<th>x <span data-ng-bind="each.num"></span></th>
+			<th><span data-ng-bind="each.itemName"></span></th>
+			<th>
+				<input type="button" value="-" data-ng-disabled="checkNum($index)" data-ng-click="changeNumNewItems($index,-1)"></input>
+				x <span data-ng-bind="each.quantity"></span>
+				<input type="button" value="+" data-ng-click="changeNumNewItems($index,1)"></input>
+			</th>
 			<th><input type="button" data-ng-click="removeItem($index)" value="Remove"></input></th>
 		</tr>
 		</table>
-		<p data-ng-bind="errorText"></p>
 	</div>
 </body>
 </html>
