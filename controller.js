@@ -3,6 +3,7 @@ app.controller("MyController", function($scope){
 	$scope.newItem="";
 	$scope.numNewItems = 1;
 	$scope.myItems = [];
+	$scope.hint="";
 	/**
 	Add an item and its quantity to the list.
 	*/
@@ -10,7 +11,6 @@ app.controller("MyController", function($scope){
 		$scope.myItems.push({"quantity":$scope.numNewItems,"itemName":$scope.newItem});
 		$scope.newItem="";
 		$scope.numNewItems=1;
-		$scope.errorText="";
 	};
 	/**
 	Remove an item from the list, using its index.
@@ -18,7 +18,19 @@ app.controller("MyController", function($scope){
 	$scope.removeItem = function(itemIndex){
 		var itemIndex = parseInt(itemIndex,10);
 		$scope.myItems.splice(itemIndex,1);
+		$scope.hint="";
 	};
+	$scope.setInputHint = function(arg){
+		if($scope.newItem==""){
+			$scope.hint="Please enter item name!";
+		}else{
+			if(arg=="num"){
+				$scope.hint="How many "+$scope.newItem+"?";
+			}else{
+				$scope.hint="Add "+$scope.numNewItems+" x "+$scope.newItem+" to list!";
+			}
+		}
+	}
 	/**
 	Increment or decrement number of entered items by 1.
 	*/
@@ -60,6 +72,7 @@ app.controller("MyController", function($scope){
 		}
 		for(var i=0;i<$scope.myItems.length;i++){
 			if($scope.myItems[i].itemName==$scope.newItem){
+				$scope.hint=$scope.newItem+" is already on the list!";
 				return true;
 			}
 		}return valid;

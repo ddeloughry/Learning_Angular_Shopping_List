@@ -5,29 +5,36 @@
 	<script	src="https://ajax.googleapis.com/ajax/libs/angularjs/1.6.9/angular.min.js"></script>
 	<script src="app.js"></script>
 	<script src="controller.js"></script>
+	<link rel="stylesheet" type="text/css" href="layout.css">
 </head>
 <body>
 	<div data-ng-app="MyApp" data-ng-controller="MyController">
-		<h1>Welcome to <span data-ng-bind="shopName"></span>!</h1>
-		<table border="1">
-		<tr>
-			<th><input type="text" data-ng-model="newItem" placeholder="Enter name of item"></input></th>
-			<th>
-				<input type="button" value="-" data-ng-disabled="checkNum(-1)" data-ng-click="changeNumNewItems(-1,-1)"></input>
-				<span data-ng-bind="numNewItems"></span>
-				<input type="button" value="+" data-ng-click="changeNumNewItems(-1,1)"></input>
-			</th>
-			<th><input type="button" data-ng-disabled="validAdd()" data-ng-click="addItem()" value="Add"></input></th>
-		</tr>
-		<tr data-ng-repeat="each in myItems">
-			<th><span data-ng-bind="each.itemName"></span></th>
-			<th>
-				<input type="button" value="-" data-ng-disabled="checkNum($index)" data-ng-click="changeNumNewItems($index,-1)"></input>
-				x <span data-ng-bind="each.quantity"></span>
-				<input type="button" value="+" data-ng-click="changeNumNewItems($index,1)"></input>
-			</th>
-			<th><input type="button" data-ng-click="removeItem($index)" value="Remove"></input></th>
-		</tr>
+		
+		<p id="title"><strong>Welcome to <span data-ng-bind="shopName">Angular Stores</span>!</strong></p>
+		
+		<div>
+			<span data-ng-bind="hint"></span><br>
+		</div>
+		
+		<div id="inputContainer">
+			<div id="inputBox">
+				<input type="text" autofocus id="readItem" placeholder="Enter name of item" data-ng-model="newItem" data-ng-mouseenter="hint='Name of item?'" data-ng-mouseleave="hint=''"></input>
+				<div id="addRem" data-ng-mouseenter="setInputHint('num')" data-ng-mouseleave="hint=''">
+					<input type="button" value="-" data-ng-disabled="checkNum(-1)" data-ng-click="changeNumNewItems(-1,-1)"></input>
+					<span data-ng-bind="numNewItems"></span>
+					<input type="button" value="+" data-ng-click="changeNumNewItems(-1,1)"></input>
+				</div>
+				<input type="button" id="addToList" value="Add" data-ng-disabled="validAdd()" data-ng-click="addItem()"data-ng-mouseenter="setInputHint('adding')" data-ng-mouseleave="hint=''"></input>
+			</div>
+		</div>
+		<table id="dispList">
+			<tr data-ng-repeat="each in myItems">
+				<th><span data-ng-bind="each.itemName"></span></th>
+				<th><input type="button" value="-" data-ng-disabled="checkNum($index)" data-ng-click="changeNumNewItems($index,-1)" data-ng-mouseenter="$parent.hint='Remove 1 x '+each.itemName" data-ng-mouseleave="$parent.hint=''"></input></th>
+				<th>x <span data-ng-bind="each.quantity"></span></th>
+				<th><input type="button" value="+" data-ng-click="changeNumNewItems($index,1)" data-ng-mouseenter="$parent.hint='Add 1 x '+each.itemName" data-ng-mouseleave="$parent.hint=''"></input></th>
+				<th><input type="button" data-ng-click="removeItem($index)" value="Remove" data-ng-mouseenter="$parent.hint='Remove '+each.quantity+' x '+each.itemName" data-ng-mouseleave="$parent.hint=''"></input></th>
+			</tr>
 		</table>
 	</div>
 </body>
